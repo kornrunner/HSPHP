@@ -1,18 +1,25 @@
 {
-    "name": "tz-lom/hsphp",
+    "name": "kornrunner/hsphp",
     "description": "Client library for MySQL HandlerSocket extension.",
     "license": "MIT",
     "authors": [
         {
             "name": "Nuzhdin Urii",
             "email": "nuzhdin.urii@gmail.com"
+        },
+        {
+            "name": "Boris Momčilović",
+            "homepage": "https://github.com/kornrunner"
         }
     ],
+    "replace": {
+        "tz-lom/hsphp": "*"
+    },
     "keywords": [
         "mysql", "mariadb", "percona", "handler socket", "HandlerSocket", "nosql"
     ],
     "support": {
-        "source": "http://github.com/tz-lom/HSPHP"
+        "source": "http://github.com/kornunner/HSPHP"
     },
     "autoload": {
         "psr-0" : {
