@@ -18,7 +18,14 @@ before_script:
   - mysql -e "SHOW PROCESSLIST;"
   - mysql -e 'CREATE DATABASE IF NOT EXISTS HSPHP_test;'
   - mysql -D HSPHP_test < tests/HSPHP/import.sql
-  - composer self-update
-  - composer install
 
-script: phpunit
+install:
+  - travis_retry composer self-update
+  - travis_retry composer install --prefer-dist --dev
+
+script:
+  - mkdir -p build/logs
+  - phpunit -c phpunit.xml.dist
+
+after_script:
+  - php vendor/bin/coveralls -v
