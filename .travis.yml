@@ -15,7 +15,8 @@ env:
 
 before_script:
   - mysql -e "INSTALL PLUGIN handlersocket SONAME 'handlersocket.so';"
-  - ./travis/configure_restart_mariadb.sh
+  - cat "$TRAVIS_BUILD_DIR/travis/hs.cnf" | sudo tee -a /etc/mysql/my.cnf
+  - sudo service mysql restart
   - mysql -e "SHOW PROCESSLIST;"
   - mysql -e 'CREATE DATABASE IF NOT EXISTS HSPHP_test;'
   - mysql -D HSPHP_test < tests/HSPHP/import.sql
