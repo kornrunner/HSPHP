@@ -225,7 +225,7 @@ class ReadSocket implements ReadCommandsInterface
      *
      * @return ErrorMessage | boolean
      */
-    public function authenticate($authkey)
+    public function authenticate(string $authkey)
     {
 	$this->sendStr(implode(self::SEP, ['A',
 		$this->encodeString($authkey)
@@ -242,7 +242,7 @@ class ReadSocket implements ReadCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function openIndex($index, $db, $table, $key, $fields)
+    public function openIndex(int $index, string $db, string $table, string $key, string $fields)
     {
         if (empty($key)) {
             $key = 'PRIMARY';
@@ -261,7 +261,7 @@ class ReadSocket implements ReadCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function getIndexId($db, $table, $key, $fields)
+    public function getIndexId($db, string $table, string $key, $fields)
     {
         if (is_array($fields)) {
             $fields = implode(',', $fields);
@@ -285,7 +285,7 @@ class ReadSocket implements ReadCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function select($index, $compare, $keys, $limit = 1, $begin = 0, $in = [])
+    public function select(int $index, string $compare, $keys, int $limit = 1, int $begin = 0, array $in = [])
     {
         $ivlen = count($in);
 

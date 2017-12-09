@@ -63,7 +63,7 @@ class ReadHandler
      * @param string                $index  Name of table key
      * @param array                 $fields List of interested fields
      */
-    public function __construct(ReadCommandsInterface $io, string $db, string $table, array $keys, string $index, array $fields)
+    public function __construct(ReadCommandsInterface $io, string $db, string $table, $keys, string $index, array $fields)
     {
         $this->db = $db;
         $this->table = $table;

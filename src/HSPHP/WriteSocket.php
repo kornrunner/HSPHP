@@ -45,7 +45,7 @@ class WriteSocket extends ReadSocket implements WriteCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function delete($index, $compare, $keys, $limit = 1, $begin = 0)
+    public function delete(int $index, string $compare, $keys, int $limit = 1, int $begin = 0)
     {
         $query = $index . self::SEP . $compare . self::SEP . count($keys);
         foreach ($keys as $key) {
@@ -59,7 +59,7 @@ class WriteSocket extends ReadSocket implements WriteCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function insert($index, $values)
+    public function insert(int $index, array $values)
     {
         $query = $index . self::SEP . '+' . self::SEP . count($values);
         foreach ($values as $key) {
@@ -71,7 +71,7 @@ class WriteSocket extends ReadSocket implements WriteCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function increment($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = [])
+    public function increment(int $index, string $compare, $keys, array $values, int $limit = 1, int $begin = 0, array $in = [])
     {
         $this->genericUpdate($index, '+', $compare, $keys, $values, $limit, $begin, $in);
     }
@@ -79,7 +79,7 @@ class WriteSocket extends ReadSocket implements WriteCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function decrement($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = [])
+    public function decrement(int $index, string $compare, $keys, array $values, int $limit = 1, int $begin = 0, array $in = [])
     {
         $this->genericUpdate($index, '-', $compare, $keys, $values, $limit, $begin, $in);
     }

@@ -43,7 +43,7 @@ interface ReadCommandsInterface
      *
      * @return integer
      */
-    public function getIndexId(string $db, string $table, string $key, string $fields);
+    public function getIndexId($db, string $table, string $key, $fields);
 
     /**
      * Perform select command using compare method for keys
@@ -59,5 +59,5 @@ interface ReadCommandsInterface
      *
      * @return void
      */
-    public function select(int $index, string $compare, array $keys, int $limit = 1, int $begin = 0, array $in = []);
+    public function select(int $index, string $compare, $keys, int $limit = 1, int $begin = 0, array $in = []);
 }

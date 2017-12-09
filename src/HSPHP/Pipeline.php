@@ -85,7 +85,7 @@ class Pipeline implements ReadCommandsInterface, WriteCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function update(int $index, string $compare, $keys, $values, int $limit = 1, int $begin = 0, array $in = [])
+    public function update(int $index, string $compare, $keys, array $values, int $limit = 1, int $begin = 0, array $in = [])
     {
         $this->addToQueue(['method' => 'update', 'args' => func_get_args()]);
     }
@@ -133,7 +133,7 @@ class Pipeline implements ReadCommandsInterface, WriteCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function getIndexId(string $db, string $table, string $key, string $fields)
+    public function getIndexId($db, string $table, string $key, $fields)
     {
         return $this->socket->getIndexId($db, $table, $key, $fields);
     }
