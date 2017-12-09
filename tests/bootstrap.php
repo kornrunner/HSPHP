@@ -13,7 +13,7 @@ class HSPipelineTest extends WriteHandler
         {
             $db = trim(file_get_contents(__DIR__.'/HSPHP/my.cfg'));
         }
-        parent::__construct($io,$db,'write1',array('k'),'',array('k','v'));
+        parent::__construct($io,$db,'write1',['k'],'',['k','v']);
     }
 }
 
@@ -26,7 +26,7 @@ class HSReadTest extends ReadHandler
         {
             $db = trim(file_get_contents(__DIR__.'/HSPHP/my.cfg'));
         }
-        parent::__construct($io,$db,'read1',array('key'),'',array('key','date','float','varchar','text','set','union','null'));
+        parent::__construct($io,$db,'read1',['key'],'',['key','date','float','varchar','text','set','union','null']);
     }
 }
 
@@ -39,6 +39,6 @@ class HSWriteTest extends WriteHandler
         {
             $db = trim(file_get_contents(__DIR__.'/HSPHP/my.cfg'));
         }
-        parent::__construct($io,$db,'write1',array('k'),'',array('k','v'));
+        parent::__construct($io,$db,'write1',['k'],'',['k','v']);
     }
 }

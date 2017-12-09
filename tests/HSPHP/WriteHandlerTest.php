@@ -13,7 +13,7 @@ class WriteHandlerTest extends TestCase
 
         $this->assertEquals(0,count($t->select('=',100500)));	// no data with 100500 key
 
-        $t->insert(array('k'=>100500,'v'=>'test\nvalue'));
+        $t->insert(['k'=>100500,'v'=>'test\nvalue']);
         $this->assertEquals([['k' => 100500, 'v' => 'test\nvalue']],$t->select('=',100500));
     }
 
