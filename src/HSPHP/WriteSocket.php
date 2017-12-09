@@ -37,7 +37,7 @@ class WriteSocket extends ReadSocket implements WriteCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function update(int $index, string $compare, $keys, array $values, int $limit = 1, int $begin = 0, $in = [])
+    public function update(int $index, string $compare, $keys, array $values, int $limit = 1, int $begin = 0, array $in = [])
     {
         $this->genericUpdate($index, 'U', $compare, $keys, $values, $limit, $begin, $in);
     }
