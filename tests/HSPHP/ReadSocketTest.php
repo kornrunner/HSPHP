@@ -33,7 +33,7 @@ class ReadSocketTest extends TestCase
         $c->connect('localhost', 9998, 0.0000000001);
         $c->connect('localhost', 19998, 0.0000000001);
         $c->connect('localhost', 1, 0.0000000001);
-        $c->connect('localhost', 3, 0.0000000001);
+        $c->connect('otherhost', 3, 0.0000000001);
     }
 
     public function testIndex()
