@@ -30,7 +30,7 @@ class ReadSocketTest extends TestCase
     {
         $this->expectException('HSPHP\IOException');
         $c = new ReadSocket();
-        $c->connect('localhost', 9998, 0.0000001);
+        $c->connect('localhost', 9998, 0.0000000001);
     }
 
     public function testIndex()
