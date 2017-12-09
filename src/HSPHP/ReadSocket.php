@@ -80,13 +80,16 @@ class ReadSocket implements ReadCommandsInterface
      *
      * @throws IOException
      */
-    public function connect(string $server = 'localhost', int $port = 9998)
+    public function connect(string $server = 'localhost', int $port = 9998, float $connect_timeout = 1, float $timeout = 1)
     {
         $addr = "tcp://{$server}:{$port}";
-        $this->socket = stream_socket_client($addr, $errc, $errs, STREAM_CLIENT_CONNECT);
+        $this->socket = @stream_socket_client($addr, $errc, $errs, $connect_timeout, STREAM_CLIENT_CONNECT);
         if (!$this->socket) {
             throw new IOException("Connection to {$server}:{$port} failed");
         }
+        $timeout_pos = abs($timeout);
+        $timeout_sec = (int) $timeout_pos;
+        stream_set_timeout($this->socket, $timeout_sec, ($timeout_pos - $timeout_sec) * 1000000);
     }
 
     public function __destruct()

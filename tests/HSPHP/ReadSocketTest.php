@@ -26,6 +26,13 @@ class ReadSocketTest extends TestCase
         $this->assertEquals(false,$c->isConnected());
     }
 
+    public function testConnectionTimeout()
+    {
+        $this->expectException('HSPHP\IOException');
+        $c = new ReadSocket();
+        $c->connect('localhost', 9998, 0.00001);
+    }
+
     public function testIndex()
     {
         $c = new ReadSocket();
@@ -39,9 +46,18 @@ class ReadSocketTest extends TestCase
         $c = new ReadSocket();
         $c->connect();
         $id = $c->getIndexId($this->db,'read1','','key,date,float,varchar,text,set,union,null');
-        $c->select($id,'=',array(42));
+        $c->select($id,'=',[42]);
         $response = $c->readResponse();
-        $this->assertEquals(array(array(42,'2010-10-29','3.14159','variable length',"some\r\nbig\r\ntext",'a,c','b',NULL)),$response);
+        $this->assertEquals([[42,'2010-10-29','3.14159','variable length',"some\r\nbig\r\ntext",'a,c','b',NULL]],$response);
+    }
+
+    public function testSelectTimeout()
+    {
+        $this->expectException('HSPHP\IOException');
+        $c = new ReadSocket();
+        $c->connect('localhost', 9998, 0, 0.00001);
+        $id = $c->getIndexId($this->db,'read1','','key,date,float,varchar,text,set,union,null');
+        $c->select($id,'=',[42]);
     }
 
     public function testSelectIn()
@@ -49,9 +65,9 @@ class ReadSocketTest extends TestCase
         $c = new ReadSocket();
         $c->connect();
         $id = $c->getIndexId($this->db,'read1','','key');
-        $c->select($id,'=',array(0),0,0,array(1,2,3,4,5));//5 will not be found
+        $c->select($id,'=',[0],0,0,[1,2,3,4,5]);//5 will not be found
         $response = $c->readResponse();
-        $this->assertEquals(array(array(1),array(2),array(3),array(4)),$response);
+        $this->assertEquals([[1],[2],[3],[4]],$response);
     }
 
     public function testSelectRange()
@@ -59,10 +75,10 @@ class ReadSocketTest extends TestCase
         $c = new ReadSocket();
         $c->connect();
         $id = $c->getIndexId($this->db,'read1','','key');
-        $c->select($id,'<=',array(4),3);
+        $c->select($id,'<=',[4],3);
         $response = $c->readResponse();
 
-        $this->assertEquals(array(array(4),array(3),array(2)),$response);
+        $this->assertEquals([[4],[3],[2]],$response);
     }
 
     public function testSelectMoved()
@@ -70,10 +86,10 @@ class ReadSocketTest extends TestCase
         $c = new ReadSocket();
         $c->connect();
         $id = $c->getIndexId($this->db,'read1','','key');
-        $c->select($id,'<=',array(4),1,3);
+        $c->select($id,'<=',[4],1,3);
         $response = $c->readResponse();
 
-        $this->assertEquals(array(array(1)),$response);
+        $this->assertEquals([[1]],$response);
     }
 
     public function testSelectMovedRange()
@@ -81,9 +97,9 @@ class ReadSocketTest extends TestCase
         $c = new ReadSocket();
         $c->connect();
         $id = $c->getIndexId($this->db,'read1','','key');
-        $c->select($id,'<=',array(4),2,1);
+        $c->select($id,'<=',[4],2,1);
         $response = $c->readResponse();
-        $this->assertEquals(array(array(3),array(2)),$response);
+        $this->assertEquals([[3],[2]],$response);
     }
 
     /**
@@ -94,9 +110,9 @@ class ReadSocketTest extends TestCase
         $c = new ReadSocket();
         $c->connect();
         $id = $c->getIndexId($this->db,'read1','','float');
-        $c->select($id,'=',array(100));
+        $c->select($id,'=',[100]);
         $response = $c->readResponse();
-        $this->assertEquals(array(array(0)),$response);
+        $this->assertEquals([[0]],$response);
     }
 
     public function testSelectWithSpecialChars()
@@ -104,8 +120,8 @@ class ReadSocketTest extends TestCase
         $c = new ReadSocket();
         $c->connect();
         $id = $c->getIndexId($this->db, 'read1', '', 'text');
-        $c->select($id, '=', array(10001));
+        $c->select($id, '=', [10001]);
         $response = $c->readResponse();
-        $this->assertEquals(array(array("\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F")), $response);
+        $this->assertEquals([["\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F"]], $response);
     }
 }

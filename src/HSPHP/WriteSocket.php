@@ -29,9 +29,9 @@ class WriteSocket extends ReadSocket implements WriteCommandsInterface
      *
      * @throws IOException
      */
-    public function connect(string $server = 'localhost', int $port = 9999)
+    public function connect(string $server = 'localhost', int $port = 9999, float $connect_timeout = 1, float $timeout = 1)
     {
-        parent::connect($server, $port);
+        parent::connect($server, $port, $connect_timeout, $timeout);
     }
 
     /**
