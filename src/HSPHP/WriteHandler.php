@@ -28,7 +28,7 @@ class WriteHandler extends ReadHandler
      * @param string                 $index  Name of table key
      * @param array                  $fields List of interested fields
      */
-    public function __construct(WriteCommandsInterface $io, $db, $table, $keys, $index, $fields)
+    public function __construct(WriteCommandsInterface $io, string $db, string $table, array $keys, string $index, array $fields)
     {
         parent::__construct($io, $db, $table, $keys, $index, $fields);
     }
@@ -59,7 +59,7 @@ class WriteHandler extends ReadHandler
      *
      * @return integer
      */
-    public function update($compare, $keys, $values, $limit = 1, $begin = 0)
+    public function update(string $compare, $keys, array $values, int $limit = 1, int $begin = 0)
     {
         $sk = $this->keys;
         if (is_array($keys)) {
@@ -72,9 +72,8 @@ class WriteHandler extends ReadHandler
             }
             array_slice($sk, 0, count($keys));
         } else {
-            $sk = array($keys);
+            $sk = [$keys];
         }
-
 
         $sv = $this->fields;
         foreach ($sv as &$value) {
@@ -86,7 +85,7 @@ class WriteHandler extends ReadHandler
         }
         array_slice($sv, 0, count($values));
         $this->io->update($this->indexId, $compare, $sk, $sv, $limit, $begin);
-        $ret = $this->io->registerCallback(array($this, 'updateCallback'));
+        $ret = $this->io->registerCallback([$this, 'updateCallback']);
         if ($ret instanceof ErrorMessage) {
             throw $ret;
         }
@@ -119,7 +118,7 @@ class WriteHandler extends ReadHandler
      *
      * @return integer How many rows affected
      */
-    public function delete($compare, $keys, $limit = 1, $begin = 0)
+    public function delete(string $compare, $keys, int $limit = 1, int $begin = 0)
     {
         $sk = $this->keys;
         if (is_array($keys)) {
@@ -132,17 +131,16 @@ class WriteHandler extends ReadHandler
             }
             array_slice($sk, 0, count($keys));
         } else {
-            $sk = array($keys);
+            $sk = [$keys];
         }
         $this->io->delete($this->indexId, $compare, $sk, $limit, $begin);
-        $ret = $this->io->registerCallback(array($this, 'deleteCallback'));
+        $ret = $this->io->registerCallback([$this, 'deleteCallback']);
         if ($ret instanceof ErrorMessage) {
             throw $ret;
         }
 
         return $ret;
     }
-
 
     /**
      * callback for insert request
@@ -166,7 +164,7 @@ class WriteHandler extends ReadHandler
      *
      * @return Boolean
      */
-    public function insert($values)
+    public function insert(array $values)
     {
         $sv = $this->fields;
         foreach ($sv as &$value) {
@@ -178,7 +176,7 @@ class WriteHandler extends ReadHandler
         }
         array_slice($sv, 0, count($values));
         $this->io->insert($this->indexId, $sv);
-        $ret = $this->io->registerCallback(array($this, 'insertCallback'));
+        $ret = $this->io->registerCallback([$this, 'insertCallback']);
         if ($ret instanceof ErrorMessage) {
             throw $ret;
         }

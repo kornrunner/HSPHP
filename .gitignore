@@ -2,3 +2,4 @@
 composer.phar
 vendor
 tests/HSPHP/my.cfg
+nbproject/

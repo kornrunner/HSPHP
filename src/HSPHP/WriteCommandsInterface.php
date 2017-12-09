@@ -31,7 +31,7 @@ interface WriteCommandsInterface
      * @param integer $begin
      * @param array $in
      */
-    public function update($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = array());
+    public function update(int $index, string $compare, array $keys, array $values, int $limit = 1, int $begin = 0, $in = []);
 
     /**
      * Perform delete command using compare method for keys
@@ -44,7 +44,7 @@ interface WriteCommandsInterface
      *
      * @return integer How many rows affected
      */
-    public function delete($index, $compare, $keys, $limit = 1, $begin = 0);
+    public function delete(int $index, string $compare, array $keys, int $limit = 1, int $begin = 0);
 
     /**
      * Perform insert command
@@ -54,7 +54,7 @@ interface WriteCommandsInterface
      *
      * @return Boolean
      */
-    public function insert($index, $values);
+    public function insert(int $index, array $values);
 
     /**
      * Modify rows incrementing their values
@@ -67,7 +67,7 @@ interface WriteCommandsInterface
      * @param integer $begin
      * @param array   $in
      */
-    public function increment($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = array());
+    public function increment(int $index, string $compare, array $keys, array $values, int $limit = 1, int $begin = 0, array $in = []);
 
     /**
      * Modify rows decrementing their values
@@ -80,5 +80,5 @@ interface WriteCommandsInterface
      * @param integer $begin
      * @param array   $in
      */
-    public function decrement($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = array());
+    public function decrement(int $index, string $compare, array $keys, array $values, int $limit = 1, int $begin = 0, array $in = []);
 }

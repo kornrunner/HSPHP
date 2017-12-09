@@ -33,7 +33,7 @@ class ReadHandler
     /**
      * @var array key fields,position matters
      */
-    protected $keys = array();
+    protected $keys = [];
 
     /**
      * @var string key name
@@ -43,7 +43,7 @@ class ReadHandler
     /**
      * @var array fields to select
      */
-    protected $fields = array();
+    protected $fields = [];
 
     /**
      * @var string database name
@@ -63,7 +63,7 @@ class ReadHandler
      * @param string                $index  Name of table key
      * @param array                 $fields List of interested fields
      */
-    public function __construct(ReadCommandsInterface $io, $db, $table, $keys, $index, $fields)
+    public function __construct(ReadCommandsInterface $io, string $db, string $table, array $keys, string $index, array $fields)
     {
         $this->db = $db;
         $this->table = $table;
@@ -85,7 +85,7 @@ class ReadHandler
             return $ret;
         }
 
-        $result = array();
+        $result = [];
         foreach ($ret as $row) {
             $result[] = array_combine($this->fields, $row);
         }
@@ -104,7 +104,7 @@ class ReadHandler
      *
      * @return array
      */
-    public function select($compare, $keys, $limit = 1, $begin = 0)
+    public function select(string $compare, $keys, int $limit = 1, int $begin = 0)
     {
         $sk = $this->keys;
         if (is_array($keys)) {
@@ -116,10 +116,10 @@ class ReadHandler
             }
             array_slice($sk, 0, count($keys));
         } else {
-            $sk = array($keys);
+            $sk = [$keys];
         }
         $this->io->select($this->indexId, $compare, $sk, $limit, $begin);
-        $ret = $this->io->registerCallback(array($this, 'selectCallback'));
+        $ret = $this->io->registerCallback([$this, 'selectCallback']);
         if ($ret instanceof ErrorMessage) {
             throw $ret;
         }

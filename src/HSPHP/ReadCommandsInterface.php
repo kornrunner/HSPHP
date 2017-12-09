@@ -21,7 +21,7 @@ namespace HSPHP;
 interface ReadCommandsInterface
 {
     /**
-     * Perform opening index $index over $key of table $db.$table and prepairing read $fields
+     * Perform opening index $index over $key of table $db.$table and preparing read $fields
      *
      * @param integer $index
      * @param string  $db
@@ -31,7 +31,7 @@ interface ReadCommandsInterface
      *
      * @return void
      */
-    public function openIndex($index, $db, $table, $key, $fields);
+    public function openIndex(int $index, string $db, string $table, string $key, string $fields);
 
     /**
      * Register index Id in socket and return it,caches indexes for future use
@@ -43,7 +43,7 @@ interface ReadCommandsInterface
      *
      * @return integer
      */
-    public function getIndexId($db, $table, $key, $fields);
+    public function getIndexId(string $db, string $table, string $key, string $fields);
 
     /**
      * Perform select command using compare method for keys
@@ -59,5 +59,5 @@ interface ReadCommandsInterface
      *
      * @return void
      */
-    public function select($index, $compare, $keys, $limit = 1, $begin = 0, $in = array());
+    public function select(int $index, string $compare, array $keys, int $limit = 1, int $begin = 0, array $in = []);
 }

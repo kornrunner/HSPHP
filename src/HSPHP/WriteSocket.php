@@ -29,7 +29,7 @@ class WriteSocket extends ReadSocket implements WriteCommandsInterface
      *
      * @throws IOException
      */
-    public function connect($server = 'localhost', $port = 9999)
+    public function connect(string $server = 'localhost', int $port = 9999)
     {
         parent::connect($server, $port);
     }
@@ -37,7 +37,7 @@ class WriteSocket extends ReadSocket implements WriteCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function update($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = array())
+    public function update(int $index, string $compare, $keys, array $values, int $limit = 1, int $begin = 0, $in = [])
     {
         $this->genericUpdate($index, 'U', $compare, $keys, $values, $limit, $begin, $in);
     }
@@ -71,7 +71,7 @@ class WriteSocket extends ReadSocket implements WriteCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function increment($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = array())
+    public function increment($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = [])
     {
         $this->genericUpdate($index, '+', $compare, $keys, $values, $limit, $begin, $in);
     }
@@ -79,7 +79,7 @@ class WriteSocket extends ReadSocket implements WriteCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function decrement($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = array())
+    public function decrement($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = [])
     {
         $this->genericUpdate($index, '-', $compare, $keys, $values, $limit, $begin, $in);
     }
@@ -96,7 +96,7 @@ class WriteSocket extends ReadSocket implements WriteCommandsInterface
      * @param integer $begin
      * @param array $in
      */
-    private function genericUpdate($index, $operation, $compare, $keys, $values, $limit = 1, $begin = 0, $in = array())
+    private function genericUpdate(int $index, string $operation, string $compare, array $keys, array $values, int $limit = 1, int $begin = 0, array $in = [])
     {
         $query = $index . self::SEP . $compare . self::SEP . count($keys);
         foreach ($keys as $key) {

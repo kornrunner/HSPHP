@@ -26,7 +26,7 @@ class ReadSocket implements ReadCommandsInterface
     const ESC       = "\1";
     const ESC_SHIFT = 0x40;
 
-    private static $decodeMap = array(
+    private static $decodeMap = [
         "\x01\x40" => "\x00",
         "\x01\x41" => "\x01",
         "\x01\x42" => "\x02",
@@ -43,9 +43,9 @@ class ReadSocket implements ReadCommandsInterface
         "\x01\x4D" => "\x0D",
         "\x01\x4E" => "\x0E",
         "\x01\x4F" => "\x0F"
-    );
+    ];
 
-    private static $encodeMap = array(
+    private static $encodeMap = [
         "\x00" => "\x01\x40",
         "\x01" => "\x01\x41",
         "\x02" => "\x01\x42",
@@ -62,12 +62,12 @@ class ReadSocket implements ReadCommandsInterface
         "\x0D" => "\x01\x4D",
         "\x0E" => "\x01\x4E",
         "\x0F" => "\x01\x4F"
-    );
+    ];
 
     protected $socket = NULL;
 
     /** @var array */
-    protected $indexes = array();
+    protected $indexes = [];
 
     /** @var integer */
     protected $currentIndex = 1;
@@ -80,12 +80,12 @@ class ReadSocket implements ReadCommandsInterface
      *
      * @throws IOException
      */
-    public function connect($server = 'localhost', $port = 9998)
+    public function connect(string $server = 'localhost', int $port = 9998)
     {
-        $addr = "tcp://$server:$port";
+        $addr = "tcp://{$server}:{$port}";
         $this->socket = stream_socket_client($addr, $errc, $errs, STREAM_CLIENT_CONNECT);
         if (!$this->socket) {
-            throw new IOException("Connection to $server:$port failed");
+            throw new IOException("Connection to {$server}:{$port} failed");
         }
     }
 
@@ -104,7 +104,7 @@ class ReadSocket implements ReadCommandsInterface
         }
 
         $this->socket = NULL;
-        $this->indexes = array();
+        $this->indexes = [];
         $this->currentIndex = 1;
     }
 
@@ -127,7 +127,7 @@ class ReadSocket implements ReadCommandsInterface
      *
      * @return string
      */
-    protected function recvStr($read = true)
+    protected function recvStr(bool $read = true)
     {
         $str = @fgets($this->socket);
         if (!$str) {
@@ -144,7 +144,7 @@ class ReadSocket implements ReadCommandsInterface
      *
      * @throws IOException
      */
-    protected function sendStr($string)
+    protected function sendStr(string $string)
     {
         if (!$this->isConnected()) {
             throw new IOException('No active connection');
@@ -172,7 +172,7 @@ class ReadSocket implements ReadCommandsInterface
      *
      * @return string
      */
-    protected function encodeString($string)
+    protected function encodeString(string $string)
     {
         if (is_null($string)) {
             return self::NULL;
@@ -211,7 +211,7 @@ class ReadSocket implements ReadCommandsInterface
         } else {
             array_shift($vals); // skip error code
             $numCols = intval(array_shift($vals));
-            $vals = array_map(array($this, 'decodeString'), $vals);
+            $vals = array_map([$this, 'decodeString'], $vals);
             $result = array_chunk($vals, $numCols);
 
             return $result;
@@ -227,9 +227,9 @@ class ReadSocket implements ReadCommandsInterface
      */
     public function authenticate($authkey)
     {
-	$this->sendStr(implode(self::SEP, array('A',
+	$this->sendStr(implode(self::SEP, ['A',
 		$this->encodeString($authkey)
-	   )) . self:: EOL
+	   ]) . self::EOL
 	);
 	$ret = $this->readResponse();
 	if (! $ret instanceof ErrorMessage) {
@@ -248,13 +248,13 @@ class ReadSocket implements ReadCommandsInterface
             $key = 'PRIMARY';
         }
 
-        $this->sendStr(implode(self::SEP, array('P',
+        $this->sendStr(implode(self::SEP, ['P',
                 intval($index),
                 $this->encodeString($db),
                 $this->encodeString($table),
                 $this->encodeString($key),
                 $this->encodeString($fields)
-            )) . self::EOL
+            ]) . self::EOL
         );
     }
 
@@ -285,7 +285,7 @@ class ReadSocket implements ReadCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function select($index, $compare, $keys, $limit = 1, $begin = 0, $in = array())
+    public function select($index, $compare, $keys, $limit = 1, $begin = 0, $in = [])
     {
         $ivlen = count($in);
 

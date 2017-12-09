@@ -23,7 +23,7 @@ class Pipeline implements ReadCommandsInterface, WriteCommandsInterface
     /**
      * @var array
      */
-    protected $queue = array();
+    protected $queue = [];
 
     /**
      * @var ReadSocket | WriteSocket
@@ -38,16 +38,16 @@ class Pipeline implements ReadCommandsInterface, WriteCommandsInterface
 
     public function reset()
     {
-        $this->queue = array();
+        $this->queue = [];
         $this->accumulate = true;
     }
 
     public function execute()
     {
         foreach ($this->queue as $call) {
-            call_user_func_array(array($this->socket, $call['method']), $call['args']);
+            call_user_func_array([$this->socket, $call['method']], $call['args']);
         }
-        $ret = array();
+        $ret = [];
         foreach ($this->queue as $call) {
             $ret[] = call_user_func($call['callback'], $this->socket->readResponse());
         }
@@ -77,63 +77,63 @@ class Pipeline implements ReadCommandsInterface, WriteCommandsInterface
     /**
      * {@inheritdoc}
      */
-    public function select($index, $compare, $keys, $limit = 1, $begin = 0, $in = array())
+    public function select(int $index, string $compare, $keys, int $limit = 1, int $begin = 0, array $in = [])
     {
-        $this->addToQueue(array('method' => 'select', 'args' => func_get_args()));
+        $this->addToQueue(['method' => 'select', 'args' => func_get_args()]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function update($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = array())
+    public function update(int $index, string $compare, $keys, $values, int $limit = 1, int $begin = 0, array $in = [])
     {
-        $this->addToQueue(array('method' => 'update', 'args' => func_get_args()));
+        $this->addToQueue(['method' => 'update', 'args' => func_get_args()]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function delete($index, $compare, $keys, $limit = 1, $begin = 0)
+    public function delete(int $index, string $compare, $keys, int $limit = 1, int $begin = 0)
     {
-        $this->addToQueue(array('method' => 'delete', 'args' => func_get_args()));
+        $this->addToQueue(['method' => 'delete', 'args' => func_get_args()]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function insert($index, $values)
+    public function insert(int $index, array $values)
     {
-        $this->addToQueue(array('method' => 'insert', 'args' => func_get_args()));
+        $this->addToQueue(['method' => 'insert', 'args' => func_get_args()]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function increment($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = array())
+    public function increment(int $index, string $compare, $keys, array $values, int $limit = 1, int $begin = 0, array $in = [])
     {
-        $this->addToQueue(array('method' => 'increment', 'args' => func_get_args()));
+        $this->addToQueue(['method' => 'increment', 'args' => func_get_args()]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function decrement($index, $compare, $keys, $values, $limit = 1, $begin = 0, $in = array())
+    public function decrement(int $index, string $compare, $keys, array $values, int $limit = 1, int $begin = 0, array $in = [])
     {
-        $this->addToQueue(array('method' => 'decrement', 'args' => func_get_args()));
+        $this->addToQueue(['method' => 'decrement', 'args' => func_get_args()]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function openIndex($index, $db, $table, $key, $fields)
+    public function openIndex(int $index, string $db, string $table, string $key, string $fields)
     {
-        $this->addToQueue(array('method' => 'openIndex', 'args' => func_get_args()));
+        $this->addToQueue(['method' => 'openIndex', 'args' => func_get_args()]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getIndexId($db, $table, $key, $fields)
+    public function getIndexId(string $db, string $table, string $key, string $fields)
     {
         return $this->socket->getIndexId($db, $table, $key, $fields);
     }
