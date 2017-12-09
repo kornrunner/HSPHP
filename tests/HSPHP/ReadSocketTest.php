@@ -26,16 +26,6 @@ class ReadSocketTest extends TestCase
         $this->assertEquals(false,$c->isConnected());
     }
 
-    public function testConnectionTimeout()
-    {
-        $this->expectException('HSPHP\IOException');
-        $c = new ReadSocket();
-        $c->connect('localhost', 9998, 0.0000000001);
-        $c->connect('localhost', 19998, 0.0000000001);
-        $c->connect('localhost', 1, 0.0000000001);
-        $c->connect('otherhost', 3, 0.0000000001);
-    }
-
     public function testIndex()
     {
         $c = new ReadSocket();
