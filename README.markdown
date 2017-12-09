@@ -1,11 +1,11 @@
-Master: [![Build Status](https://api.travis-ci.org/tz-lom/HSPHP.png?branch=master)](http://travis-ci.org/tz-lom/HSPHP)
+Master: [![Build Status](https://travis-ci.org/kornrunner/HSPHP.svg?branch=master)](https://travis-ci.org/kornrunner/HSPHP) [![Coverage Status](https://coveralls.io/repos/github/kornrunner/HSPHP/badge.svg?branch=master)] (https://coveralls.io/github/kornrunner/HSPHP?branch=master)
 
 # HandlerSocker Library for PHP
 
 This library provides an API for communicating with the HandlerSocket plugin for
 MySQL compatible databases(MySQL, MariaDB, Percona).
 
-For more information on HandlerSocket, check out the 
+For more information on HandlerSocket, check out the
 [MariaDB Documentation on HandlerSocket here](https://mariadb.com/kb/en/handlersocket/).
 
 ## Installation
@@ -13,7 +13,7 @@ For more information on HandlerSocket, check out the
 [Once you have composer installed](https://getcomposer.org/doc/00-intro.md#system-requirements "Getting Started With Composer"),
 run the following in your php project directory:
 
-        php composer.phar require tz-lom/hsphp --no-update
+        composer require kornrunner/hsphp --no-update
 
 # Usage Examples
 
