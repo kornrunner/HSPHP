@@ -1,4 +1,4 @@
-Master: [![Build Status](https://travis-ci.org/kornrunner/HSPHP.svg?branch=master)](https://travis-ci.org/kornrunner/HSPHP) [![Coverage Status](https://coveralls.io/repos/github/kornrunner/HSPHP/badge.svg?branch=master)] (https://coveralls.io/github/kornrunner/HSPHP?branch=master)
+Master: [![Build Status](https://travis-ci.org/kornrunner/HSPHP.svg?branch=master)](https://travis-ci.org/kornrunner/HSPHP) [![Coverage Status](https://coveralls.io/repos/github/kornrunner/HSPHP/badge.svg?branch=master)]  (https://coveralls.io/github/kornrunner/HSPHP?branch=master)
 
 # HandlerSocker Library for PHP
 
