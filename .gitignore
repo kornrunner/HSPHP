@@ -4,3 +4,4 @@ vendor
 tests/HSPHP/my.cfg
 nbproject/
 build/
+.phpunit.result.cache
